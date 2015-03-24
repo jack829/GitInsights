@@ -1,0 +1,1 @@
+// controller for page of all git hub users a gitinsight user is following
