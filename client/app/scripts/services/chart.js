@@ -16,7 +16,9 @@ function Chart () {
   };
 
   function lineGraph (data, username) {
-    
+    console.log(data);
+
+
     var secondsPerYear = 525600 * 60;
     var dateNow = new Date() / 1000; //convert to unix
     var dateXYearsAgo = dateNow - (secondsPerYear * 1);
@@ -37,9 +39,9 @@ function Chart () {
       }
     }
 
-    if(usersData.length >= 2){
+    //if(usersData.length >= 2){
       usersData = [];
-    }
+    //}
 
     usersData.push(userData);
 
@@ -83,6 +85,7 @@ function Chart () {
 
     // Add second pie chart when comparing users.
     var chart = config.chart;
+
 
     // nvd3 library's pie chart.
     nv.addGraph(function() {
