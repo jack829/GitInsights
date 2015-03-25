@@ -25,6 +25,14 @@
       });
     }
 
+    $scope.logout = function(){
+      Auth.logout();
+      $scope.github.username = null;
+      //   .then(function () {
+      //     $scope.github = null;
+      // });
+    }
+
     $scope.getAllWeeklyData = function(username){
       // first we make a set of queries to get data from all the repo's the user has contributed to.
       // the process also tags some metadata to help with chaining

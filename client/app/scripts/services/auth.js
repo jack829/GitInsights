@@ -19,7 +19,8 @@ function Auth ($q) {
   return {
     login: login,
     getToken: getToken,
-    getUsername: getUsername
+    getUsername: getUsername,
+    logout: logout
   };
 
   function getToken () {
@@ -45,6 +46,13 @@ function Auth ($q) {
         }
       });
     })
+  }
+
+  function logout () {
+    //return $q(function (resolve, reject) {
+      ref.unauth();
+      console.log("unauthenticated successfully");
+    //});
   }
 }
 
