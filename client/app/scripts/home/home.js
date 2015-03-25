@@ -59,9 +59,9 @@
 
           var config = {};
           config.chart = "#chart2"
-          if($scope.numUsers % 2 === 0){
+          /*if($scope.numUsers % 2 === 0){
             config.chart = "#chart3"
-          }
+          }*/
 
           Chart.pieChart(languages, config);
         });
