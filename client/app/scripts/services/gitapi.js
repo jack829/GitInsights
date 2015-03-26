@@ -378,4 +378,5 @@ function GitApi ($q, $http, Auth) {
 
 }
 
+
 })();

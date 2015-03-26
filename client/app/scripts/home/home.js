@@ -9,9 +9,9 @@
     .primaryPalette('light-blue')
   });
 
-  HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart'];
+  HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart', 'Follow'];
 
-  function HomeController($scope, GitApi, Auth, Chart){
+  function HomeController($scope, GitApi, Auth, Chart, Follow){
     $scope.github = {};
     $scope.currentUser = {};
 
@@ -104,15 +104,20 @@
       console.log("about to follow!");
       GitApi.getUserContact(username)
         .then(function(data){
-          console.log("contact info ", data);
-          console.log("name ", data.name);
-          console.log("email ", data.email);
+          // console.log("contact info ", data);
+          // console.log("name ", data.name);
+          // console.log("email ", data.email);
           var user = {
             username: username,
             name: data.name,
             email: data.email
           }
+          // Follow.saveGitUser(user)
+          //   .then(function(data){
+          //     console.log("followed user")
+          //   });
           $scope.usersFollowing.push(user);
+
         });
     }
   }
