@@ -14,7 +14,9 @@
   function HomeController($scope, GitApi, Auth, Chart){
     $scope.github = {};
     $scope.currentUser = {};
-    $scope.lastUser = {};
+
+    $scope.lastUser = {};  //add last user for display purposes
+    $scope.usersFollowing = [];
     $scope.loaded = false;
     $scope.following = false;  //add condition for following
     $scope.loaded3 = true;
@@ -99,8 +101,19 @@
     };
 
     $scope.follow = function(username) {
-      console.log("bout to follow!");
-      
+      console.log("about to follow!");
+      GitApi.getUserContact(username)
+        .then(function(data){
+          console.log("contact info ", data);
+          console.log("name ", data.name);
+          console.log("email ", data.email);
+          var user = {
+            username: username,
+            name: data.name,
+            email: data.email
+          }
+          $scope.usersFollowing.push(user);
+        });
     }
   }
 })();
