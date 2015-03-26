@@ -16,6 +16,7 @@
     $scope.currentUser = {};
     $scope.lastUser = {};  //add last user for display purposes
     $scope.loaded = false;
+    $scope.following = false;  //add condition for following
     $scope.loaded3 = true;
     $scope.numUsers = 0;
 
@@ -68,10 +69,16 @@
         });
     };
 
-    // add functionality for following a user
-    $scope.follow = function(username) {
-      console.log("in follow!");
+    // add functionality for following users
+    $scope.following = function() {
+      //console.log("in following!");
+      $scope.following = !($scope.following);
     };
+
+    $scope.follow = function(username) {
+      console.log("bout to follow!");
+      
+    }
   }
 })();
 

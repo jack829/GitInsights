@@ -17,10 +17,10 @@ angular.module('gitInsight', [
     //   templateUrl: 'app/scripts/compare/compare.html',
     //   controller: 'CompareController'
     // })
-    .when('/following', {
-      templateUrl: 'app/scripts/following/usersFollowing.html',
-      controller: ''
-    })
+    // .when('/following', {
+    //   templateUrl: 'app/scripts/following/usersFollowing.html',
+    //   controller: 'FollowingController'
+    // })
     .otherwise({
       redirectTo: '/'
     });
