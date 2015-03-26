@@ -11,17 +11,16 @@
       saveGitUser: saveGitUser
     };
 
-    function saveGitUser (user) {
+    function saveGitUser (employer, user) {
       console.log("in follow.saveGitUser");
       return $http({
         method: 'POST',
-        url: '',
-        data: {
-          name: user.name,
-          username: user.username,
-          email: user.email
-        }
+        url: 'employer/' + employer.name +'/following',
       })
     }
   }
 })();
+
+
+// POST employer/following
+// GET 
