@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var UserProfileSchema = new Schema({
+var UserProfile = {
   name:String,
   company:String,
   blog:String, 
@@ -16,14 +16,14 @@ var UserProfileSchema = new Schema({
   following:Number,
   created_at:Date,
   updated_at:Date,
-});
+};
 
 var GitUserSchema = new Schema({
     username: String,
     oauthToken: String,
     totalLinesOfCode: Number, 
-    languaged: [{language:String, lines:Number, percentage:Number}],
-    profileInfo: [UserProfileSchema]
+    languages: [{language:String, lines:Number, percentage:Number}],
+    profileInfo: UserProfile
 });
 
 var GitUser = mongoose.model('GitUser', GitUserSchema);

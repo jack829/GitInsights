@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var EmployerSchema = new Schema({
-  name:  {type:String, required:true}
-  following: [{
+var FollowedUsers = new Schema({
+  {
     username: String,
     name: String,
     profileThumbUrl: String,
@@ -12,8 +11,19 @@ var EmployerSchema = new Schema({
     notes: [{
       note: String,
       noteStub: String, 
-      timeWritten: Date}] 
-  }],
+      timeWritten: Date
+    }] 
+  }
+}),
+
+var EmployerSchema = new Schema({
+  name:  {type:String, required:true},
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'FollowedUsers'
+    }
+  ],
 });
 
 var Employer = mongoose.model('Employer', EmployerSchema);
