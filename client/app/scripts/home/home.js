@@ -28,9 +28,6 @@
     $scope.logout = function(){
       Auth.logout();
       $scope.github.username = null;
-      //   .then(function () {
-      //     $scope.github = null;
-      // });
     }
 
     $scope.getAllWeeklyData = function(username){
