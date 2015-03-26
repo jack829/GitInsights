@@ -120,6 +120,10 @@
 
         });
     }
+
+    $scope.saveNote = function(note) {
+      console.log("saving note:", note)
+    }
   }
 })();
 
