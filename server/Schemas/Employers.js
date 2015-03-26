@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var FollowedUsers = new Schema({
-  {
     username: String,
     name: String,
     profileThumbUrl: String,
@@ -13,8 +12,7 @@ var FollowedUsers = new Schema({
       noteStub: String, 
       timeWritten: Date
     }] 
-  }
-}),
+});
 
 var EmployerSchema = new Schema({
   name:  {type:String, required:true},
