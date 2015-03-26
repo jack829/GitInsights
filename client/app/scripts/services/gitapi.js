@@ -62,7 +62,7 @@ function GitApi ($q, $http, Auth) {
 
     //perhaps extend params with given input
     params = params || {access_token: Auth.getToken()};
-    console.log('params: ', params);
+    //console.log('params: ', params);
     return $http({
       method: 'GET',
       url: url,
@@ -245,5 +245,6 @@ function GitApi ($q, $http, Auth) {
   }
 
 }
+
 
 })();
