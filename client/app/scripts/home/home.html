@@ -74,8 +74,22 @@
        </svg>
      </div>
 
+    <!-- /////////// Add following page -->
      <div ng-if="!following">
       <h2> Users you Follow</h2>
+      <table>
+        <th>
+          <td> Name </td>
+          <td> GitHub Username </td>
+          <td> Email </td>
+        </th>
+        <tr ng-repeat="user in usersFollowing">
+          <td> </td>
+          <td> {{user.name}} </td>
+          <td> {{user.username}} </td>
+          <td> {{user.email}} </td>
+        </tr>
+      </ul>
      </div>
 
       <div class="mastfoot">
