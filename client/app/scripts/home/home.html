@@ -7,7 +7,7 @@
             <ul class="nav masthead-nav">
               <!-- <li class="active"><a href="#">Home</a></li> -->
               <!-- <li><a href="#/compare">Compare</a></li> --> 
-              <li><a ng-click="" ng-if="github.username" href="">Users I Follow</a></li>
+              <li><a ng-click="" ng-if="github.username" href="#/following">Users I Follow</a></li>
               <li><a ng-click="login()" ng-if="!github.username" href="">Login with Git</a></li>
               <li><a ng-click="logout()" ng-if="github.username" href="">Logout</a></li>
               <li ng-if="github.username" scope.model="github"><h2>My account: {{github.username}}</h2></li>
@@ -15,6 +15,10 @@
           </nav>
         </div>
       </div>
+      
+      <!-- //////// add view div -->
+      <!-- <div ng-view></div> -->
+      <!-- ///////////// -->
 
       <div class="inner cover" id='home'>
         <!-- <div> -->
