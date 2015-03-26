@@ -54,7 +54,6 @@ function GitApi ($q, $http, Auth) {
   }
 
   function get (url, params) {
-    //console.log('get');
     //Auth.getToken() retrieves the gitToken when a user authenticates with
     //firebase's Github Provider
 
@@ -108,8 +107,8 @@ function GitApi ($q, $http, Auth) {
     // console.log(get(userRepos));
     // console.log(get(userRepos).$$state);
     return get(userRepos).then(function (res){
-      // console.log("Repos:", res.data);
-      // console.log("Count:", res.data.length);
+      //console.log("Repos:", res.data);
+      //console.log("Count:", res.data.length);
       var repos = res.data;
       var username = res.data[0].owner.login;
       usersRepos[username] = repos;
