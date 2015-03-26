@@ -42,6 +42,14 @@
               <!--<md-button ng-click="getAllWeeklyData(currentUser.username)">Compare Users</md-button>!-->
                <md-button ng-click="getAllWeeklyData(currentUser.username)">Search</md-button>
             </md-content>
+      <!-- /////////////////// adding follow button-->
+            <div>
+              <h3>{{lastUser.username}}</h3>
+              <md-button ng-click="follow(lastUser.username)">
+              follow {{lastUser.username}}
+              </md-button>
+            </div>
+      <!-- /////////////////// end addition -->
           </p>
       </div>
 

@@ -16,7 +16,7 @@ function Chart () {
   };
 
   function lineGraph (data, username) {
-    console.log(data);
+    //console.log(data);
 
 
     var secondsPerYear = 525600 * 60;

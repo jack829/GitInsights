@@ -14,6 +14,7 @@
   function HomeController($scope, GitApi, Auth, Chart){
     $scope.github = {};
     $scope.currentUser = {};
+    $scope.lastUser = {};  //add last user for display purposes
     $scope.loaded = false;
     $scope.loaded3 = true;
     $scope.numUsers = 0;
@@ -33,12 +34,15 @@
     $scope.getAllWeeklyData = function(username){
       // first we make a set of queries to get data from all the repo's the user has contributed to.
       // the process also tags some metadata to help with chaining
+      // GitApi.getUserContact(username);
       GitApi.getAllWeeklyData(username)
         .then(function (data){ 
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username);
+          console.log("current user ", $scope.currentUser)
           $scope.loaded = true;
+          $scope.lastUser = $scope.currentUser;  //keep displaying the user whose page you're on
           $scope.currentUser = {};
           return data;
         })
@@ -62,6 +66,11 @@
 
           Chart.pieChart(languages, config);
         });
+    };
+
+    // add functionality for following a user
+    $scope.follow = function(username) {
+      console.log("in follow!");
     };
   }
 })();
