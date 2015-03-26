@@ -54,11 +54,16 @@ function GitApi ($q, $http, Auth) {
   }
 
   function get (url, params) {
+    //console.log('get');
     //Auth.getToken() retrieves the gitToken when a user authenticates with
     //firebase's Github Provider
 
+    // curl -u <token>:x-oauth-basic https://api.github.com/user
+    // curl -u <token>:x-oauth-basic https://api.github.com/user/repos
+
     //perhaps extend params with given input
     params = params || {access_token: Auth.getToken()};
+    console.log('params: ', params);
     return $http({
       method: 'GET',
       url: url,
@@ -99,7 +104,12 @@ function GitApi ($q, $http, Auth) {
     //currently only fetches repos owned by user
     //TODO: Fetch all repos user has contributed to
     var userRepos = gitApi + 'users/' + username + '/repos';
+
+    // console.log(get(userRepos));
+    // console.log(get(userRepos).$$state);
     return get(userRepos).then(function (res){
+      // console.log("Repos:", res.data);
+      // console.log("Count:", res.data.length);
       var repos = res.data;
       var username = res.data[0].owner.login;
       usersRepos[username] = repos;
@@ -156,7 +166,6 @@ function GitApi ($q, $http, Auth) {
   // Once all the requests have been resolved, we can sum the values 
   // across all repos and get an estimate of the user's language use
   // based on the total number of bytes per language.
-
   function getUserLanguages (repos) {
     var squashed = {};
     repos.forEach(function (repo) {

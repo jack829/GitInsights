@@ -44,15 +44,13 @@ function Auth ($q) {
           github = authData.github;
           resolve(github);
         }
-      });
+      }, {scope: "repo"});
     })
   }
 
   function logout () {
-    //return $q(function (resolve, reject) {
-      ref.unauth();
-      console.log("unauthenticated successfully");
-    //});
+    ref.unauth();
+    console.log("unauthenticated successfully");
   }
 }
 
