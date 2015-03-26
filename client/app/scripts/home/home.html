@@ -49,12 +49,21 @@
                <md-button ng-click="getAllWeeklyData(currentUser.username)">Search</md-button>
             </md-content>
       <!-- /////////////////// adding following button-->
-            <div>
-              <h3>{{lastUser.username}}</h3>
+            <md-content layout="row" layout-sm="column">
+              <h2>Viewing: {{lastUser.username}}</h2>
               <md-button ng-click="follow(lastUser.username)">
               follow {{lastUser.username}}
               </md-button>
-            </div>
+   
+    <!-- ///////// Add place for notes -->
+              <md-input-container>
+                <label>Add Note on User</label>
+                <input type="text" ng-model="note"></input>
+                <!-- <input type="submit" value="Add Note"/> -->
+              </md-input-container>
+              <md-button ng-click="saveNote(note)"> Add Note </md-button>
+
+            </md-content>
       <!-- /////////////////// end addition -->
           </p>
       </div>
@@ -73,10 +82,7 @@
        <svg style="height:300px;">
        </svg>
      </div>
-
-     <div ng-if="loaded && following">
-      
-     </div>
+    
 
     <!-- /////////// Add following page -->
      <div ng-if="!following">
