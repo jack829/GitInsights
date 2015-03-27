@@ -9,9 +9,9 @@
     .primaryPalette('light-blue')
   });
 
-  HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart','Test'];
+  HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart'];
 
-  function HomeController($scope, GitApi, Auth, Chart, Test){
+  function HomeController($scope, GitApi, Auth, Chart){
     $scope.github = {};
     $scope.currentUser = {};
     $scope.loaded = false;
