@@ -59,8 +59,11 @@ function Auth ($q, $http) {
     console.log("in saveEmployer ", username)
     return $http({
       method: 'POST',
-      url: '/employer/' + username.
-    });
+      url: '/employer/' + username
+    })
+    .then(function(res) {
+      return res.data;
+    })
   }
 }
 

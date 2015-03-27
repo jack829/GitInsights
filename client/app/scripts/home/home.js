@@ -34,6 +34,7 @@
         GitApi.storeAndRetrieveUserDataOnLogin(github.username)
         .then(function(res){
           $scope.github.following = res.data.following;
+
           console.log("scope.github ", $scope.github.username)
           Auth.saveEmployer(github.username)
             .then(function(data) {
@@ -43,7 +44,6 @@
             // .then(function($scope.github.username){
             //   Follow.getEmployerUsers($scope.github.username)
             // });
-
         });
       });
     }

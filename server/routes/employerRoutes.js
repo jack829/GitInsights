@@ -4,6 +4,7 @@ var Employers = require('../Schemas/Employers').Employer;
 //var FollowedUsers = require('../Schemas/Employers').FollowedUser;
 
 module.exports = function(app){
+  console.log("in employer router")
   app.route('/:name')
     .get(function(req,res){
       Employers.findOne({name:req.params.name},function(err,employer){

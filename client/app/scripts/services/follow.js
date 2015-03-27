@@ -26,9 +26,6 @@
       .then(function (res) {
         return res.data;
       })
-      // .then(function (res) {
-
-      // })
     };
 
     function getEmployerUsers (username) {
@@ -41,7 +38,6 @@
       // .then(function(res) {
       //   return res.data;
       // })
-
     }
   }
 })();
