@@ -9,12 +9,15 @@
   FollowingController.$inject = ['$scope', 'GitApi', 'Auth', 'Follow'];
   function FollowingController ($scope, GitApi, Auth, Follow) {
     console.log("in following ctrl; scope.github ", $scope.github);
-
+    $scope.usersFollowing = []
     
 
     $scope.getUsersFollowing = function() {
       Follow.getEmployerUsers()
-    }
+        .then(function(data){
+          $scope.usersFollowing = data;
+        })
+    };
   }
 
 

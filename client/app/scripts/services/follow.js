@@ -26,9 +26,13 @@
       .then(function (res) {
         return res.data;
       })
+      // .then(function (res) {
+
+      // })
     };
 
     function getEmployerUsers (username) {
+
       //console.log("username for ")
       // return $http({
       //   method: 'GET',
@@ -37,6 +41,7 @@
       // .then(function(res) {
       //   return res.data;
       // })
+
     }
   }
 })();
