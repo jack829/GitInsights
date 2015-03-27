@@ -17,12 +17,11 @@ module.exports = function(app){
       });
     })
     .put(function(req,res){
-      console.log(req.body);
       Employers.findOneAndUpdate(
         {name:req.params.name},
         {
         //http://docs.mongodb.org/manual/reference/operator/update/addToSet/
-          $addToSet: {following: new FollowedUsers(req.body)._id}
+          $addToSet: {following: req.body}
         },
         {safe: true, upsert: true},
         function(err,employer){
@@ -41,7 +40,7 @@ module.exports = function(app){
 
   app.route('/:name/following')
     .get(function(req,res){
-      console.log("!!!",req.params.name);
+      console.log('!!!',req.params.name);
       Employers
       .findOne({name:req.params.name})
       //.populate('following')
