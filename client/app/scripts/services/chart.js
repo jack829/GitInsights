@@ -30,15 +30,16 @@ function Chart () {
 
     usersData = [];
 
+    //Array for selecting line color
     var colors = d3.scale.category10().range();
 
+    //This section parses the data for estimated language usage over time
     if(type === 'languages'){
       chartNum = '#chart2';
       var colorIndex = 0;
       for(var x in data.languages){
         for(var y in data) {
           if(y !== 'languages'){
-            //console.log('datay:' + y);
             unixTimeStamps.push(y);
             if(data[y][x] === undefined){
               netAdditions.push(0);
@@ -50,10 +51,8 @@ function Chart () {
         userData = {"key": "Estimated " + x + " usage", "values": []};
         
         for(var i = 0; i < unixTimeStamps.length; i++){
-          //console.log('lang:' + unixTimeStamps[i], dateXYearsAgo);
           if (unixTimeStamps[i] > dateXYearsAgo) {
             userData.values.push({x: unixTimeStamps[i], y: netAdditions[i]});
-            //userData.values.push([unixTimeStamps[i], netAdditions[i]]);
           }
         }
         userData.color = colors[colorIndex];
@@ -61,24 +60,21 @@ function Chart () {
         usersData.push(userData);
       }
       yAxisLabel = 'Bytes of Code';
+
+    //This section parses the data for total insertions
     } else {
       chartNum = '#chart';
       for(var week in data){
         unixTimeStamps.push(+week);
-        //netAdditions.push(data[week].a - data[week].d);
-        //Changed so only look at added code not added - deleted code
         netAdditions.push(data[week].a);
       }
-      //var userData = {"key": username + "'s Net Additions", "values": []};
     
-    
-        userData = {"key": username + "'s Additions", "values": []};
+      userData = {"key": username + "'s Additions", "values": []};
 
       for(var i = 0; i < unixTimeStamps.length; i++){
         console.log('code:' + unixTimeStamps[i], dateXYearsAgo);
         if (unixTimeStamps[i] > dateXYearsAgo) {
            userData.values.push({x: unixTimeStamps[i], y: netAdditions[i]});
-          //userData.values.push([unixTimeStamps[i], netAdditions[i]]);
         }
       }
 
@@ -88,41 +84,31 @@ function Chart () {
       yAxisLabel = 'Number of Code Insertions';
     }
    
-   usersData.reverse();
-   console.log('usersdata')
-   console.log(usersData);
+    //graph presents with proper colors if lines are listed lowest to highest   
+    usersData.reverse();
+    
 
-    
-    
-      nv.addGraph(function() {
-      // Creates multi-line graph
+    nv.addGraph(function() {
       var chart = nv.models.lineChart()
-      //.x(function(d) { return d[0] })
-      //.y(function(d) { return d[1] })
-       //.color(function(d) {return d.color})
-      //.color(d3.scale.category10().range())
-      .useInteractiveGuideline(true)
-      //.transitionDuration(350)  //how fast do you want the lines to transition?
-      .showLegend(true); 
+        .useInteractiveGuideline(true)
+        .showLegend(true); 
 
       // Define x axis
       chart.xAxis
-      // .tickValues(unixTimeStamps)
-      .tickFormat(function(d) {
+        .tickFormat(function(d) {
         return d3.time.format('%x')(new Date(d*1000))
-      });
+        });
 
       // Define y axis
       chart.yAxis
-      .domain(d3.range(netAdditions))
-      .tickFormat(d3.format('d'))
-      .axisLabel(yAxisLabel);
+        .domain(d3.range(netAdditions))
+        .tickFormat(d3.format('d'))
+        .axisLabel(yAxisLabel);
 
       // append defined chart to svg element
-      //d3.select('#chart svg')
       d3.select(chartNum +' svg')
-      .datum(usersData)
-      .call(chart);
+        .datum(usersData)
+        .call(chart);
 
       // resizes graph when window resizes
       nv.utils.windowResize(chart.update());

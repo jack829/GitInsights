@@ -62,6 +62,8 @@
           /*if($scope.numUsers % 2 === 0){
             config.chart = "#chart3"
           }*/
+          
+          //Graph the estimated language usage graph
           Chart.lineGraph(languages[1], username, 'languages');
           Chart.pieChart(languages[0], config);
         });

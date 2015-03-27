@@ -79,8 +79,6 @@ function GitApi ($q, $http, Auth) {
 
     return get(contributors).then(function (res) {
       var numContributors = res.data.length;
-      console.log('resdata');
-      //console.log(res.data);
       //if there are multiple contributors for this repo,
       //we need to find the one that matches the queried user
       for(var i = 0; i < numContributors; i++){
@@ -174,8 +172,7 @@ function GitApi ($q, $http, Auth) {
     var total_weekly_language_data = {};
     var total_languages = {};
     var squashed = {};
-    //console.log('repo');
-    //console.log(repos);
+
     repos.forEach(function (repo) {
       var result = estimateUserContribution(repo);
       if (result) {
@@ -196,9 +193,7 @@ function GitApi ($q, $http, Auth) {
             if(total_weekly_language_data[week] === undefined){
               total_weekly_language_data[week] = {};
             }
-          /*  if(isNaN(week[language])){
-              week[language] = 0;
-            }*/
+
             if(total_weekly_language_data[week][language] === undefined)
             {              
               total_weekly_language_data[week][language] = result[1][week][language] || 0;
@@ -296,10 +291,11 @@ function GitApi ($q, $http, Auth) {
       }
     }
 
+    //If no contributors just return the total language stats
     if (!repo[2]) {
       result = repo[1];
     }
-     //console.log(result);
+
     total_results.push(result);
     total_results.push(weekly_results);
     return total_results;
