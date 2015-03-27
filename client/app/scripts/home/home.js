@@ -22,6 +22,7 @@
       Auth.login()
         .then(function (github) {
           $scope.github = github;
+          console.log($scope.github);
       });
     }
 
@@ -34,7 +35,9 @@
       // first we make a set of queries to get data from all the repo's the user has contributed to.
       // the process also tags some metadata to help with chaining
       GitApi.getAllWeeklyData(username)
-        .then(function (data){ 
+        .then(function (response){
+          var data = response;
+          console.log("Response data in home.js",response);
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');

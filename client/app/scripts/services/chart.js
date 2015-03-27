@@ -15,7 +15,7 @@ function Chart () {
     pieChart: pieChart
   };
 
-  function lineGraph (data, username, type) {
+ function lineGraph (data, username, type) {
 
     var secondsPerYear = 525600 * 60;
     var dateNow = new Date() / 1000; //convert to unix
