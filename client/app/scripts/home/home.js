@@ -37,7 +37,7 @@
         .then(function (data){ 
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
-          Chart.lineGraph(weeklyData, username);
+          Chart.lineGraph(weeklyData, username, 'additions');
           $scope.loaded = true;
           $scope.currentUser = {};
           return data;
@@ -51,16 +51,19 @@
           // this time the data is processed to create a pie chart that estimates 
           // the % of the each language the user codes in by taking the repo language stats * (user activity / total repo activity)
           var languages = GitApi.getUserLanguages(data);
+          console.log('weekly repo data');
+          console.log(languages[1]);
           $scope.numUsers++;
           $scope.loaded3 = !($scope.loaded3);
 
           var config = {};
-          config.chart = "#chart2"
+          //Make the pie chart the third chart
+          config.chart = "#chart3"
           /*if($scope.numUsers % 2 === 0){
             config.chart = "#chart3"
           }*/
-
-          Chart.pieChart(languages, config);
+          Chart.lineGraph(languages[1], username, 'languages');
+          Chart.pieChart(languages[0], config);
         });
     };
   }

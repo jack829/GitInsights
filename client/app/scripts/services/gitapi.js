@@ -26,6 +26,7 @@ function GitApi ($q, $http, Auth) {
   //we return an array of reduced week objects to graph the total additions/deletions
   function reduceAllWeeklyData (array, username) {
     var reduced = {};
+    console.log(array);
     array.forEach(function (result) {
       if(result !== undefined){
         result.weeks.forEach(function (data) {
@@ -74,9 +75,12 @@ function GitApi ($q, $http, Auth) {
   //made by a user for a given repo
   function getRepoWeeklyData (repo, username) {
     var contributors = repo.url + '/stats/contributors';
+    console.log('contr:' + contributors);
 
     return get(contributors).then(function (res) {
       var numContributors = res.data.length;
+      console.log('resdata');
+      //console.log(res.data);
       //if there are multiple contributors for this repo,
       //we need to find the one that matches the queried user
       for(var i = 0; i < numContributors; i++){
@@ -166,20 +170,50 @@ function GitApi ($q, $http, Auth) {
   // across all repos and get an estimate of the user's language use
   // based on the total number of bytes per language.
   function getUserLanguages (repos) {
+    var results = [];
+    var total_weekly_language_data = {};
+    var total_languages = {};
     var squashed = {};
+    //console.log('repo');
+    //console.log(repos);
     repos.forEach(function (repo) {
       var result = estimateUserContribution(repo);
       if (result) {
-        for (var language in result) {
+        console.log('result1');
+        console.log(result[1]);
+        for (var language in result[0]) {
           if (squashed[language]) {
-            squashed[language] += result[language];
+            squashed[language] += result[0][language];
           } else {
-            squashed[language] = result[language];
+            squashed[language] = result[0][language];
           }
+          //Save all languages
+          if(total_languages[language] === undefined){
+            total_languages[language] = 1;
+          }
+          //Loop through the weeks for repo, gathering language data per week
+          for(var week in result[1]) {
+            if(total_weekly_language_data[week] === undefined){
+              total_weekly_language_data[week] = {};
+            }
+          /*  if(isNaN(week[language])){
+              week[language] = 0;
+            }*/
+            if(total_weekly_language_data[week][language] === undefined)
+            {              
+              total_weekly_language_data[week][language] = result[1][week][language] || 0;
+            } else {
+              total_weekly_language_data[week][language] += result[1][week][language] || 0;
+            }
+          }
+
         }
       }
     });
-    return squashed;
+    total_weekly_language_data.languages = total_languages;
+    results.push(squashed);
+    results.push(total_weekly_language_data);
+    return results;
   }
 
   //returns an object representing the number of bytes
@@ -203,7 +237,8 @@ function GitApi ($q, $http, Auth) {
 
   function estimateUserContribution (repo) {
     var result = {};
-
+    var weekly_results = {};
+    var total_results = [];
     // no data on repo
     if (repo.length === 0){
       return null;
@@ -212,9 +247,9 @@ function GitApi ($q, $http, Auth) {
     // no request for contributor data,
     // user is sole contributor
     // return entire languageStat
-    if (!repo[2]) {
+    /*if (!repo[2]) {
       return repo[1];
-    }
+    }*/
 
     var weeklyData = repo[0].weeks;
     var languageStats = repo[1];
@@ -223,25 +258,51 @@ function GitApi ($q, $http, Auth) {
     var userNetAdditions = 0;
     var repoNetAdditions = 0;
 
+    
     //weeklyData is an array of week objects
     //with the format {additions:#, deletions:#, week:#(UNIX Timestamp)}
     weeklyData.forEach(function (week) {
       userNetAdditions += (week.a - week.d);
+      //create an object for weekly data
+      weekly_results[week.w] = {};
+      //record users additons
+      weekly_results[week.w].user = week.a;
     });
 
     //codeFreq is is an array of arrays
     //with the format [timestamp, additions, deletions]
-    codeFreq.forEach(function (week) {
-      repoNetAdditions += (week[1] - week[2]);
-    });
+    if(codeFreq !== undefined){
+      codeFreq.forEach(function (week) {
+        //repoNetAdditions += (week[1] - week[2]);
+        //Just record total additions
+        repoNetAdditions += week[1]; 
+        //record total additions for the week
+        weekly_results[week[0]].total = week[1];
+      });
+    }
 
     var ratio = (userNetAdditions/repoNetAdditions);
 
+    weeklyData.forEach(function (week) {
+      //get the precentage user contributed by taking the user additons and dividing by the total additons
+      weekly_results[week.w].userPercent = (weekly_results[week.w].user / weekly_results[week.w].total);
+    });
+
     for (var key in languageStats) {
       result[key] = languageStats[key] * ratio;
+      for(var x in weekly_results) {
+        //calculate the estimated languages percentage per week 
+        weekly_results[x][key] = languageStats[key] * weekly_results[x].userPercent;
+      }
     }
 
-    return result;
+    if (!repo[2]) {
+      result = repo[1];
+    }
+     //console.log(result);
+    total_results.push(result);
+    total_results.push(weekly_results);
+    return total_results;
   }
 
 }
