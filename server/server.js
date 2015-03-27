@@ -11,20 +11,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',function(callback){
   console.log("MONGODB CONNECTION OPEN");
-  
-  Employer.create({name:'test1'},function(err,model){
-    if (err) console.log(error);
-    console.log("MODEL:",model);
-  });
-
-  GitUser.create({
-    username:'testUser',
-    oauthToken: 'secretKey',
-    totalLinesOfCode: 10000 
-  },function(err,model){
-    if (err) console.log(error);
-    console.log("MODEL:",model);
-  });
 });
 
 require('./middleware.js')(app,express);

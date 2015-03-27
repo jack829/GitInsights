@@ -7,17 +7,35 @@
   .config( function($mdThemingProvider){
     $mdThemingProvider.theme('docs-dark', 'default')
     .primaryPalette('light-blue')
+  })
+  .factory('Test',function($http){
+    var httpEmployerTest = function(method,employerName,data) {
+      return $http({
+        method: method,
+        url: '/employer/'+employerName,
+        data: data
+      }).then(function(res) {
+        console.log(res.data);
+      });
+    };
+    return {
+      httpEmployerTest: httpEmployerTest
+    };
   });
 
-  HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart'];
+  HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart','Test'];
 
-  function HomeController($scope, GitApi, Auth, Chart){
+  function HomeController($scope, GitApi, Auth, Chart, Test){
     $scope.github = {};
     $scope.currentUser = {};
     $scope.loaded = false;
     $scope.loaded3 = true;
     $scope.numUsers = 0;
-
+    // Test.httpEmployerTest('GET',"test1",null);
+    // Test.httpEmployerTest('POST',"test2",null);
+    Test.httpEmployerTest('PUT',"test2",{username: "followingTest",name: "following Test",profileThumbUrl: "http://img.img",});
+    // Test.httpEmployerTest('POST',"test3",null);
+    // Test.httpEmployerTest('DELETE',"test3",null);
     $scope.login = function(){
       Auth.login()
         .then(function (github) {
