@@ -1,0 +1,52 @@
+Notes
+
+home.html
+-click on getAllWeeklyData(currentUser.username)
+home.js - getAllWeeklyData(
+  GitApi.getAllWeeklyData(username)
+    getUserRepos(username) - grabs from cache or github api - https://api.github.com/users/RioaM/repos (returns cache entry) then for each repo
+    getRepoWeeklyData(repo, username)
+     -grap the weekly data of contributions for repo
+
+then -- so now have all weekly contribution data per repo
+  GitApi.reduceAllWeeklyData(data -calculates weekly data, can change so look at weekly 
+    -gets passed an Array of objects 10 in length
+      -some object are undefined - these are forked repos with no contribution from user
+      -some are defined
+        -author, numContribuors, total, url, weeks
+           -weeks is an array of object of variable length
+              -each object contains a-,c,d,w
+  change for each repo and languages
+  chart
+then
+ GitApi.gatherLanguageData(data) - how much user has contributed
+   getLanguageStats(repo) - returns languages with the number of bytes of code written in that language.
+   getCodeFrequency(repo) - Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
+then
+  GitApi.getUserLanguages(data);
+    estimateUserContribution(repo) - returns approx of how much user contributed
+      
+***********     -does this for total weeks, why not weekly************
+      takes usernetadditions/totalnetadditons get ratio of contributions per repo
+       -takes language stats - returns ratio of languages
+  pie chart
+
+
+  Weekly Hash
+
+w - Start of the week, given as a Unix timestamp.
+a - Number of additions
+d - Number of deletions
+c - Number of commits
+
+a = for each week get users additon per week
+b = for each week get language stats on repo *** can't do this weekly
+c = for each week get total additons to repo
+
+chart point = a/c * b
+  -so get the % user contributed and multipy by the total language usage
+
+
+-total code = addition - deletions
+
+
