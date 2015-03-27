@@ -15,7 +15,15 @@
       console.log("in follow.saveGitUser");
       return $http({
         method: 'POST',
-        url: 'employer/' + employer.name +'/following',
+        url: 'employer/' + employer.name +'/following'
+      })
+    };
+
+    function getEmployerUsers (username) {
+      console.log("username for ")
+      return $http({
+        method: 'GET',
+        url: 'employer/' + username + '/following'
       })
     }
   }

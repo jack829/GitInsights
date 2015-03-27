@@ -17,7 +17,7 @@
     $scope.lastUser = {};  //add last user for display purposes
     $scope.usersFollowing = [];
     $scope.loaded = false;
-    $scope.following = false;  //add condition for following
+    //$scope.following = false;  //add condition for following
     $scope.loaded3 = true;
     $scope.numUsers = 0;
 
@@ -25,7 +25,13 @@
       Auth.login()
         .then(function (github) {
           $scope.github = github;
-      });
+          // Auth.saveEmployer(github.username)
+          //   .then(function(data) {
+          //     $scope.
+          //   })
+        });
+        // .then(function(github){
+        // });
     }
 
     $scope.logout = function(){
@@ -71,10 +77,10 @@
     };
 
     // add functionality for following users
-    $scope.following = function() {
-      //console.log("in following!");
-      $scope.following = !($scope.following);
-    };
+    // $scope.following = function() {
+    //   //console.log("in following!");
+    //   $scope.following = !($scope.following);
+    // };
 
     $scope.follow = function(username) {
       console.log("about to follow!");

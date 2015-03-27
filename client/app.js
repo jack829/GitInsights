@@ -6,7 +6,8 @@ angular.module('gitInsight', [
   'gitInsight.userinfo',
   'gitInsight.compare',
   'gitInsight.chart',
-  'gitInsight.follow'
+  'gitInsight.follow',
+  'gitInsight.following'
 ])
 .config(function($routeProvider, $httpProvider){
   $routeProvider
@@ -18,10 +19,14 @@ angular.module('gitInsight', [
     //   templateUrl: 'app/scripts/compare/compare.html',
     //   controller: 'CompareController'
     // })
-    // .when('/following', {
-    //   templateUrl: 'app/scripts/following/usersFollowing.html',
-    //   controller: 'FollowingController'
-    // })
+    .when('/home', {
+      templateUrl: 'app/scripts/home/home.html',
+      controller: 'HomeController'
+    })
+    .when('/following', {
+      templateUrl: 'app/scripts/following/usersFollowing.html',
+      controller: 'FollowingController'
+    })
     .otherwise({
       redirectTo: '/'
     });
