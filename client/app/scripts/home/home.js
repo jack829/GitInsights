@@ -22,6 +22,7 @@
       Auth.login()
         .then(function (github) {
           $scope.github = github;
+          console.log($scope.github);
       });
     }
 
@@ -35,8 +36,8 @@
       // the process also tags some metadata to help with chaining
       GitApi.getAllWeeklyData(username)
         .then(function (response){
-          var data = response.data;
-          console.log("data",data);
+          var data = response;
+          console.log("Response data in home.js",response);
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');

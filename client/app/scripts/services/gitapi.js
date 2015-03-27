@@ -47,6 +47,29 @@ function GitApi ($q, $http, Auth) {
   function getAllWeeklyData (username) {
     return get('/gitUser/'+username)
     .then(function(res) {
+      console.log("GET negative res",res);
+      if(res.data.length===0){
+        return getUserRepos(username)
+          .then(function (repos) {
+            var promises = repos.map(function (repo) {
+              return getRepoWeeklyData(repo, username);
+            });
+              return $q.all(promises);
+            })
+          .then(function(data){
+            console.log("POST:",data);
+            return post('/gitUser/'+username,data).data.gitUserData;
+          })
+      } else {
+        console.log("GET positive res",res);
+        return res.data.gitUserData;
+      }
+    });
+  }
+
+  function storeAndRetrieveUserDataOnLogin(username){
+    return get('/gitUser/'+username+'/nf')
+    .then(function(res) {
       console.log("res",res);
       if(res.data.length===0){
         return getUserRepos(username)

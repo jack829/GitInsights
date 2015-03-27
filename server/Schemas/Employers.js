@@ -18,8 +18,8 @@ var EmployerSchema = new mongoose.Schema({
   following: [FollowedUsers],
 });
 
-var FollowedUser = mongoose.model('FollowedUser',FollowedUsers);
+//var FollowedUser = mongoose.model('FollowedUser',FollowedUsers);
 var Employer = mongoose.model('Employer', EmployerSchema);
 
 module.exports.Employer = Employer;
-module.exports.FollowedUser = FollowedUser;
+//module.exports.FollowedUser = FollowedUser;
