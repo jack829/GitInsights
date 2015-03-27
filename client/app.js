@@ -19,10 +19,10 @@ angular.module('gitInsight', [
     //   templateUrl: 'app/scripts/compare/compare.html',
     //   controller: 'CompareController'
     // })
-    .when('/home', {
-      templateUrl: 'app/scripts/home/home.html',
-      controller: 'HomeController'
-    })
+    // .when('/home', {
+    //   templateUrl: 'app/scripts/home/home.html',
+    //   controller: 'HomeController'
+    // })
     .when('/following', {
       templateUrl: 'app/scripts/following/usersFollowing.html',
       controller: 'FollowingController'

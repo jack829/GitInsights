@@ -8,19 +8,28 @@
   function Follow ($http, Auth) {
 
     return {
-      saveGitUser: saveGitUser
+      addToFollowing: addToFollowing,
+      getEmployerUsers: getEmployerUsers
     };
 
-    function saveGitUser (employer, user) {
-      console.log("in follow.saveGitUser");
+    function addToFollowing (employerUserName, username) {
+      console.log("iin addToFollowing");
+      console.log("employerUserName ", employerUserName);
+      console.log("username ", username);
       return $http({
-        method: 'POST',
-        url: 'employer/' + employer.name +'/following'
+        method: 'PUT',
+        url: 'employer/' + employerUserName +'/following',
+        data: {
+          username: username
+        }
       })
+      // .then(function (res) {
+
+      // })
     };
 
     function getEmployerUsers (username) {
-      console.log("username for ")
+      //console.log("username for ")
       return $http({
         method: 'GET',
         url: 'employer/' + username + '/following'

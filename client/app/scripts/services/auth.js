@@ -56,10 +56,10 @@ function Auth ($q, $http) {
   }
 
   function saveEmployer(username) {
-    console.log("in saveEmployer")
+    console.log("in saveEmployer ", username)
     return $http({
       method: 'POST',
-      url: '/employers/' + username
+      url: '/employer/' + username.
     });
   }
 }
