@@ -50,6 +50,7 @@
     $scope.getAllWeeklyData = function(username){
       // first we make a set of queries to get data from all the repo's the user has contributed to.
       // the process also tags some metadata to help with chaining
+      // GitApi.getUserContact(username);
       GitApi.getAllWeeklyData(username)
         .then(function (response){
           //console.log("$scope.github ",$scope.github);
@@ -88,6 +89,11 @@
           Chart.lineGraph(languages[1], username, 'languages');
           Chart.pieChart(languages[0], config);
         });
+    };
+
+    // add functionality for following a user
+    $scope.follow = function(username) {
+      console.log("in follow!");
     };
   }
 })();
