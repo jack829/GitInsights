@@ -28,7 +28,7 @@ function GitApi ($q, $http, Auth) {
     var reduced = {};
     console.log(array);
     array.forEach(function (result) {
-      if(result !== undefined){
+      if(result !== undefined && result !== null){
         result.weeks.forEach(function (data) {
             var week = data.w;
             for (var key in data) {
@@ -42,16 +42,28 @@ function GitApi ($q, $http, Auth) {
     return reduced;
   }
 
-  //returns data from each api call
-  //after all successfully resolves
+  // returns data from each api call
+  // after all successfully resolves
   function getAllWeeklyData (username) {
-    return getUserRepos(username)
-      .then(function (repos) {
-        var promises = repos.map(function (repo) {
-          return getRepoWeeklyData(repo, username);
-        });
-        return $q.all(promises);
-      });
+    return get('/gitUser/'+username)
+    .then(function(res) {
+      console.log("res",res);
+      if(res.data.length===0){
+        return getUserRepos(username)
+          .then(function (repos) {
+            var promises = repos.map(function (repo) {
+              return getRepoWeeklyData(repo, username);
+            });
+              return $q.all(promises);
+            })
+          .then(function(data){
+            console.log("POST:",data);
+            return post('/gitUser/'+username,data);
+          })
+      } else {
+        return res;
+      }
+    });
   }
 
   function get (url, params) {
@@ -63,12 +75,22 @@ function GitApi ($q, $http, Auth) {
 
     //perhaps extend params with given input
     params = params || {access_token: Auth.getToken()};
-    console.log('params: ', params);
+    //console.log('params: ', params);
     return $http({
       method: 'GET',
       url: url,
       params: params
     });
+  }
+
+  function post (url,data){
+    return $http(
+      {
+        method: 'POST',
+        url: url,
+        data: data
+      }
+    );
   }
 
   //returns an array of additions/deletions and commits
@@ -100,11 +122,17 @@ function GitApi ($q, $http, Auth) {
         return resolve(usersRepos[username]);
       });
     }
-
+    var userRepos;
     //else, fetch via api
     //currently only fetches repos owned by user
     //TODO: Fetch all repos user has contributed to
-    var userRepos = gitApi + 'users/' + username + '/repos';
+    console.log("Auth.getToken()",Auth.getToken());
+    if(Auth.getToken()){
+      //console.log("HAVE ONE");
+      userRepos = gitApi + 'user/' + 'repos';
+    } else {
+      userRepos = gitApi + 'users/' + username + '/repos';
+    }
 
     // console.log(get(userRepos));
     // console.log(get(userRepos).$$state);
