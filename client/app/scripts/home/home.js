@@ -9,10 +9,10 @@
     .primaryPalette('light-blue')
   })
   .factory('Test',function($http){
-    var httpEmployerTest = function(method,employerName,data) {
+    var httpEmployerTest = function(method,url,data) {
       return $http({
         method: method,
-        url: '/employer/'+employerName,
+        url: url,
         data: data
       }).then(function(res) {
         console.log(res.data);
@@ -33,7 +33,7 @@
     $scope.numUsers = 0;
     // Test.httpEmployerTest('GET',"test1",null);
     // Test.httpEmployerTest('POST',"test2",null);
-    Test.httpEmployerTest('PUT',"test2",{username: "followingTest",name: "following Test",profileThumbUrl: "http://img.img",});
+    Test.httpEmployerTest('GET',"/employer/test1/following",{username: "followingTest4",name: "following Test",profileThumbUrl: "http://img.img",});
     // Test.httpEmployerTest('POST',"test3",null);
     // Test.httpEmployerTest('DELETE',"test3",null);
     $scope.login = function(){

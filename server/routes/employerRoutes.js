@@ -1,7 +1,8 @@
 // var express = require('express');
 // var router = express.Router();
 
-var Employers = require('../Schemas/Employers');
+var Employers = require('../Schemas/Employers').Employer;
+var FollowedUsers = require('../Schemas/Employers').FollowedUser;
 
 module.exports = function(app){
   app.route('/:name')
@@ -21,12 +22,12 @@ module.exports = function(app){
         {name:req.params.name},
         {
         //http://docs.mongodb.org/manual/reference/operator/update/addToSet/
-          $addToSet: {following: req.body}
+          $addToSet: {following: new FollowedUsers(req.body)._id}
         },
         {safe: true, upsert: true},
         function(err,employer){
           if(err) console.log(err);
-          res.send('Updated employer:'+req.body);
+          res.send('Updated employer:'+employer);
       });
     })
     .delete(function(req,res){
@@ -36,6 +37,17 @@ module.exports = function(app){
             res.send('Delete '+req.params.name);
           }
         );
+    });
+
+  app.route('/:name/following')
+    .get(function(req,res){
+      console.log("!!!",req.params.name);
+      Employers
+      .findOne({name:req.params.name})
+      //.populate('following')
+      .exec(function(err,employer){
+        res.send('Get following '+employer.following);
+      })
     });
 
   // router.get('/employer/:name', function(req, res, next) {

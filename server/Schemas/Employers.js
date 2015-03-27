@@ -18,11 +18,13 @@ var EmployerSchema = new mongoose.Schema({
   following: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'FollowedUsers'
+      ref: 'FollowedUser'
     }
   ],
 });
 
+var FollowedUser = mongoose.model('FollowedUser',FollowedUsers);
 var Employer = mongoose.model('Employer', EmployerSchema);
 
-module.exports = Employer;
+module.exports.Employer = Employer;
+module.exports.FollowedUser = FollowedUser;
