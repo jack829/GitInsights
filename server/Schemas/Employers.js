@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+
 var FollowedUsers = new mongoose.Schema({
     username: String,
     name: String,
@@ -23,3 +24,4 @@ var Employer = mongoose.model('Employer', EmployerSchema);
 
 module.exports.Employer = Employer;
 //module.exports.FollowedUser = FollowedUser;
+
