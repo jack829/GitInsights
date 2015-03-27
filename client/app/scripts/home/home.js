@@ -7,7 +7,7 @@
   .config( function($mdThemingProvider){
     $mdThemingProvider.theme('docs-dark', 'default')
     .primaryPalette('light-blue')
-  })
+  });
 
   HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart','Test'];
 
