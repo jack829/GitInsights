@@ -4,3 +4,17 @@
   <h2> You follow these GitHub users</h2>
 </div>
 
+    
+<table>
+  <th>
+    <td> Name </td>
+    <td> GitHub Username </td>
+    <td> Email </td>
+  </th>
+  <tr ng-repeat="user in usersFollowing">
+    <td> </td>
+    <td> {{user.name}} </td>
+    <td> {{user.username}} </td>
+    <td> {{user.email}} </td>
+  </tr>
+</table>

@@ -1,20 +1,20 @@
   <div class="site-wrapper-inner">
     <div class="cover-container">
-      <div class="masthead clearfix">
+      <!-- <div class="masthead clearfix">
         <div class="inner">
           <h3 class="masthead-brand">Git Insight</h3>
           <nav>
             <ul class="nav masthead-nav">
-              <!-- <li class="active"><a href="#">Home</a></li> -->
+              <! <li class="active"><a href="#">Home</a></li> -->
               <!-- <li><a href="#/compare">Compare</a></li> --> 
-              <li><a ng-click="following()" ng-if="github.username">Users I Follow</a></li>
+              <!-- <li><a ng-if="github.username" href="#/following">Users I Follow</a></li>
               <li><a ng-click="login()" ng-if="!github.username" href="">Login with Git</a></li>
               <li><a ng-click="logout()" ng-if="github.username" href="">Logout</a></li>
               <li ng-if="github.username" scope.model="github"><h2>My account: {{github.username}}</h2></li>
             </ul>
           </nav>
         </div>
-      </div>
+      </div> --> 
       
       <!-- //////// add view div -->
       <!-- <div ng-view></div> -->
@@ -23,7 +23,7 @@
       <div class="inner cover" id='home'>
         <!-- <div> -->
           <!-- //////add following condition -->
-          <div ng-if="!loaded && following" class="welcome"> 
+          <div ng-if="!loaded" class="welcome"> 
             <h1 class="cover-heading">Git Insight</h1>
             <p class="lead">We can help recruiters and employers analyze someone's github profile</p>
             <p class="lead">
@@ -38,7 +38,7 @@
           </div>
         <!-- </div> -->
 
-        <div ng-if="loaded && following">
+        <div ng-if="loaded">
           <p class="lead">
             <md-content md-theme="docs-dark" class="md-padding" layout="row" layout-sm="column" style="font-size:1.2em">
               <md-input-container required flex>
@@ -86,6 +86,7 @@
      </div>
 
 
+
      <div ng-if="loaded" id="chart3" class="clearfix">
        <svg style="height:300px;">
        </svg>
@@ -93,6 +94,7 @@
     
 
     <!-- /////////// Add following page -->
+  <!--   move to usersFollowing.html 
      <div ng-if="!following">
       <h2> Users you Follow</h2>
       <table>
@@ -108,7 +110,7 @@
           <td> {{user.email}} </td>
         </tr>
       </ul>
-     </div>
+     </div> -->
 
       <div class="mastfoot">
         <div class="inner">

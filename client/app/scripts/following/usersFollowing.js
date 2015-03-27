@@ -6,8 +6,16 @@
   angular.module('gitInsight.following', [])
     .controller('FollowingController', FollowingController);
 
-  FollowingController.$inject = ['$scope', 'GitApi', 'Auth'];
-  function FollowingController ($scope, GitApi, Auth) {
-    console.log("in following ctrl");
+  FollowingController.$inject = ['$scope', 'GitApi', 'Auth', 'Follow'];
+  function FollowingController ($scope, GitApi, Auth, Follow) {
+    console.log("in following ctrl; scope.github ", $scope.github);
+
+    
+
+    $scope.getUsersFollowing = function() {
+      Follow.getEmployerUsers()
+    }
   }
-})
+
+
+})();

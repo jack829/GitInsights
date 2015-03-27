@@ -4,19 +4,39 @@
   angular.module('gitInsight.follow', [])
     .factory('Follow', Follow);
 
-  Follow.$inject = ['$http', 'Auth'];
-  function Follow ($http, Auth) {
+  Follow.$inject = ['$http', 'Auth', '$q'];
+  function Follow ($http, Auth, $q) {
 
     return {
-      saveGitUser: saveGitUser
+      addToFollowing: addToFollowing,
+      getEmployerUsers: getEmployerUsers
     };
 
-    function saveGitUser (employer, user) {
-      console.log("in follow.saveGitUser");
+    function addToFollowing (employerUserName, username) {
+      console.log("iin addToFollowing");
+      console.log("employerUserName ", employerUserName);
+      console.log("username ", username);
       return $http({
-        method: 'POST',
-        url: 'employer/' + employer.name +'/following',
+        method: 'PUT',
+        url: 'gitUser/' + jack829 +'/following',
+        data: {
+          username: username
+        }
       })
+      .then(function (res) {
+        return res.data;
+      })
+    };
+
+    function getEmployerUsers (username) {
+      //console.log("username for ")
+      // return $http({
+      //   method: 'GET',
+      //   url: 'employer/' + username + '/following'
+      // })
+      // .then(function(res) {
+      //   return res.data;
+      // })
     }
   }
 })();

@@ -4,8 +4,8 @@
 angular.module('gitInsight.auth', [])
   .factory('Auth', Auth);
 
-Auth.$inject = ['$q'];
-function Auth ($q) {
+Auth.$inject = ['$q', '$http'];
+function Auth ($q, $http) {
   //Uses Firebase only to authenticate via Github
   //Authenticated Github users are allowed to make 2000api calls/hr vs 60 for unauthenticated users
 
@@ -21,7 +21,8 @@ function Auth ($q) {
     login: login,
     getToken: getToken,
     getUsername: getUsername,
-    logout: logout
+    logout: logout,
+    saveEmployer: saveEmployer
   };
 
   function getToken () {
@@ -52,6 +53,14 @@ function Auth ($q) {
   function logout () {
     ref.unauth();
     console.log("unauthenticated successfully");
+  }
+
+  function saveEmployer(username) {
+    console.log("in saveEmployer")
+    return $http({
+      method: 'POST',
+      url: '/employers/' + username
+    });
   }
 }
 
