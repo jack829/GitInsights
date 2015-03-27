@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var FollowedUsers = new Schema({
-  {
+var FollowedUsers = new mongoose.Schema({
     username: String,
     name: String,
     profileThumbUrl: String,
@@ -13,14 +11,13 @@ var FollowedUsers = new Schema({
       noteStub: String, 
       timeWritten: Date
     }] 
-  }
-}),
+});
 
-var EmployerSchema = new Schema({
+var EmployerSchema = new mongoose.Schema({
   name:  {type:String, required:true},
   following: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'FollowedUsers'
     }
   ],
