@@ -4,7 +4,7 @@ var morgan = require('morgan')
 
 
 module.exports = function (app,express) {
-
+  var employerRouter = express.Router();
 
   app.use(bodyparser.json());
   app.use(morgan('dev'));
@@ -13,5 +13,9 @@ module.exports = function (app,express) {
   app.get('/', function (req, res) {
     res.sendFile('index.html');
   });
+
+  app.use('/employer', employerRouter);
+
+  require('./routes/employerRoutes.js')(employerRouter);
 
 }

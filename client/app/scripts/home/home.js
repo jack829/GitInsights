@@ -17,7 +17,7 @@
     $scope.loaded = false;
     $scope.loaded3 = true;
     $scope.numUsers = 0;
-
+    
     $scope.login = function(){
       Auth.login()
         .then(function (github) {
