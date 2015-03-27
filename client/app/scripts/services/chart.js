@@ -72,7 +72,7 @@ function Chart () {
       userData = {"key": username + "'s Additions", "values": []};
 
       for(var i = 0; i < unixTimeStamps.length; i++){
-        console.log('code:' + unixTimeStamps[i], dateXYearsAgo);
+        //console.log('code:' + unixTimeStamps[i], dateXYearsAgo);
         if (unixTimeStamps[i] > dateXYearsAgo) {
            userData.values.push({x: unixTimeStamps[i], y: netAdditions[i]});
         }

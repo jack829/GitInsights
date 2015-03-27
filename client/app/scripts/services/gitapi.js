@@ -17,7 +17,8 @@ function GitApi ($q, $http, Auth) {
     getUserRepos: getUserRepos,
     getUserContact: getUserContact,
     gatherLanguageData: gatherLanguageData,
-    getUserLanguages: getUserLanguages
+    getUserLanguages: getUserLanguages,
+    storeAndRetrieveUserDataOnLogin:storeAndRetrieveUserDataOnLogin
   };
 
   //a week is an array of objects
@@ -26,7 +27,7 @@ function GitApi ($q, $http, Auth) {
   //we return an array of reduced week objects to graph the total additions/deletions
   function reduceAllWeeklyData (array, username) {
     var reduced = {};
-    console.log(array);
+    //console.log(array);
     array.forEach(function (result) {
       if(result !== undefined && result !== null){
         result.weeks.forEach(function (data) {
@@ -47,8 +48,9 @@ function GitApi ($q, $http, Auth) {
   function getAllWeeklyData (username) {
     return get('/gitUser/'+username)
     .then(function(res) {
-      console.log("GET negative res",res);
+
       if(res.data.length===0){
+        //console.log("GET negative res",res);
         return getUserRepos(username)
           .then(function (repos) {
             var promises = repos.map(function (repo) {
@@ -57,11 +59,11 @@ function GitApi ($q, $http, Auth) {
               return $q.all(promises);
             })
           .then(function(data){
-            console.log("POST:",data);
+            //console.log("POST:",data);
             return post('/gitUser/'+username,data).data.gitUserData;
           })
       } else {
-        console.log("GET positive res",res);
+        //console.log("GET positive res",res);
         return res.data.gitUserData;
       }
     });
@@ -70,7 +72,7 @@ function GitApi ($q, $http, Auth) {
   function storeAndRetrieveUserDataOnLogin(username){
     return get('/gitUser/'+username+'/nf')
     .then(function(res) {
-      console.log("res",res);
+      //console.log("res",res);
       if(res.data.length===0){
         return getUserRepos(username)
           .then(function (repos) {
@@ -80,7 +82,7 @@ function GitApi ($q, $http, Auth) {
               return $q.all(promises);
             })
           .then(function(data){
-            console.log("POST:",data);
+            //console.log("POST:",data);
             return post('/gitUser/'+username,data);
           })
       } else {
@@ -120,7 +122,7 @@ function GitApi ($q, $http, Auth) {
   //made by a user for a given repo
   function getRepoWeeklyData (repo, username) {
     var contributors = repo.url + '/stats/contributors';
-    console.log('contr:' + contributors);
+    //console.log('contr:' + contributors);
 
     return get(contributors).then(function (res) {
       var numContributors = res.data.length;
@@ -149,7 +151,7 @@ function GitApi ($q, $http, Auth) {
     //else, fetch via api
     //currently only fetches repos owned by user
     //TODO: Fetch all repos user has contributed to
-    console.log("Auth.getToken()",Auth.getToken());
+    //console.log("Auth.getToken()",Auth.getToken());
     if(Auth.getToken()){
       //console.log("HAVE ONE");
       userRepos = gitApi + 'user/' + 'repos';
@@ -227,8 +229,8 @@ function GitApi ($q, $http, Auth) {
     repos.forEach(function (repo) {
       var result = estimateUserContribution(repo);
       if (result) {
-        console.log('result1');
-        console.log(result[1]);
+        //console.log('result1');
+        //console.log(result[1]);
         for (var language in result[0]) {
           if (squashed[language]) {
             squashed[language] += result[0][language];

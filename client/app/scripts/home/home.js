@@ -22,8 +22,17 @@
       Auth.login()
         .then(function (github) {
           $scope.github = github;
-          console.log($scope.github);
-      });
+          return github;
+      })
+      .then(function(github){
+        //console.log("scope loging github",github);
+        GitApi.storeAndRetrieveUserDataOnLogin(github.username)
+        .then(function(res){
+          $scope.github.following = res.data.following;
+        });
+        
+      })
+      ;
     }
 
     $scope.logout = function(){
@@ -37,7 +46,6 @@
       GitApi.getAllWeeklyData(username)
         .then(function (response){
           var data = response;
-          console.log("Response data in home.js",response);
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');
@@ -54,8 +62,8 @@
           // this time the data is processed to create a pie chart that estimates 
           // the % of the each language the user codes in by taking the repo language stats * (user activity / total repo activity)
           var languages = GitApi.getUserLanguages(data);
-          console.log('weekly repo data');
-          console.log(languages[1]);
+          //console.log('weekly repo data');
+          //console.log(languages[1]);
           $scope.numUsers++;
           $scope.loaded3 = !($scope.loaded3);
 
