@@ -18,19 +18,20 @@ module.exports = function(app){
         res.send(gitUser);
       });
     })
-    // .put(function(req,res){
-    //   GitUsers.findOneAndUpdate(
-    //     {name:req.params.name},
-    //     {
-    //     //http://docs.mongodb.org/manual/reference/operator/update/addToSet/
-    //       $addToSet: {following: req.body}
-    //     },
-    //     {safe: true, upsert: true},
-    //     function(err,gitUser){
-    //       if(err) console.log(err);
-    //       res.send(gitUser);
-    //   });
-    // })
+    .put(function(req,res){
+      console.log("PUT gituser");
+      GitUsers.findOneAndUpdate(
+        {name:req.params.name},
+        {
+        //http://docs.mongodb.org/manual/reference/operator/update/addToSet/
+          $addToSet: {following: req.body}
+        },
+        {safe: true, upsert: true},
+        function(err,gitUser){
+          if(err) console.log(err);
+          res.send(gitUser);
+      });
+    })
     .delete(function(req,res){
       GitUsers
         .findOneAndRemove({name:req.params.name},

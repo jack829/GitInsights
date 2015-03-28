@@ -42,6 +42,16 @@
               <!--<md-button ng-click="getAllWeeklyData(currentUser.username)">Compare Users</md-button>!-->
                <md-button ng-click="getAllWeeklyData(currentUser.username)">Search</md-button>
             </md-content>
+            <md-content layout="row" layout-sm="column">
+            <h1>Viewing: {{lastUser.username}}</h1>
+            <md-button ng-click="follow(lastUser.username)">
+            <h1>follow {{lastUser.username}}</h1>
+            </md-button>
+            </md-content>
+            <md-content layout="row" layout-sm="column">
+            <h2>Following:</h2>
+            <div ng-repeat="user in github.following"><a ng-click="getAllWeeklyData(user);currentUser.username=user;" href=""><h2> {{user}} | </h2></a></div>
+            </md-content>
           </p>
       </div>
 

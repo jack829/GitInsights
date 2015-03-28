@@ -14,6 +14,7 @@
   function HomeController($scope, GitApi, Auth, Chart){
     $scope.github = {};
     $scope.currentUser = {};
+    $scope.lastUser = {};
     $scope.loaded = false;
     $scope.loaded3 = true;
     $scope.numUsers = 0;
@@ -35,6 +36,12 @@
       ;
     }
 
+    $scope.follow = function(username){
+      GitApi.follow($scope.github.username,username);
+      $scope.github.following.push(username);
+      console.log("FOLLOWING",$scope.github.following);
+    }
+
     $scope.logout = function(){
       Auth.logout();
       $scope.github.username = null;
@@ -45,11 +52,14 @@
       // the process also tags some metadata to help with chaining
       GitApi.getAllWeeklyData(username)
         .then(function (response){
-          var data = response;
+          //console.log("$scope.github ",$scope.github);
+          console.log("RESPONSE",response.data.gitUserData);
+          var data = response.data.gitUserData;
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');
           $scope.loaded = true;
+          $scope.lastUser.username = $scope.currentUser.username;
           $scope.currentUser = {};
           return data;
         })

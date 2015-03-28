@@ -9,6 +9,7 @@ function GitApi ($q, $http, Auth) {
 
   var gitApi = 'https://api.github.com/';
   var usersRepos = {};
+  var loggedInUser = "";
 
   return {
     reduceAllWeeklyData: reduceAllWeeklyData,
@@ -18,7 +19,8 @@ function GitApi ($q, $http, Auth) {
     getUserContact: getUserContact,
     gatherLanguageData: gatherLanguageData,
     getUserLanguages: getUserLanguages,
-    storeAndRetrieveUserDataOnLogin:storeAndRetrieveUserDataOnLogin
+    storeAndRetrieveUserDataOnLogin:storeAndRetrieveUserDataOnLogin,
+    follow:follow
   };
 
   //a week is an array of objects
@@ -46,6 +48,7 @@ function GitApi ($q, $http, Auth) {
   // returns data from each api call
   // after all successfully resolves
   function getAllWeeklyData (username) {
+    //console.log("USERNAME ",username);
     return get('/gitUser/'+username)
     .then(function(res) {
 
@@ -53,18 +56,19 @@ function GitApi ($q, $http, Auth) {
         //console.log("GET negative res",res);
         return getUserRepos(username)
           .then(function (repos) {
+            console.log("REPOS",repos);
             var promises = repos.map(function (repo) {
               return getRepoWeeklyData(repo, username);
             });
               return $q.all(promises);
             })
           .then(function(data){
-            //console.log("POST:",data);
-            return post('/gitUser/'+username,data).data.gitUserData;
+            console.log("POST:",data);
+            return post('/gitUser/'+username,data);
           })
       } else {
         //console.log("GET positive res",res);
-        return res.data.gitUserData;
+        return res;
       }
     });
   }
@@ -72,6 +76,7 @@ function GitApi ($q, $http, Auth) {
   function storeAndRetrieveUserDataOnLogin(username){
     return get('/gitUser/'+username+'/nf')
     .then(function(res) {
+      loggedInUser = username;
       //console.log("res",res);
       if(res.data.length===0){
         return getUserRepos(username)
@@ -118,6 +123,22 @@ function GitApi ($q, $http, Auth) {
     );
   }
 
+  function follow(loggedInUser,toFollowUsername){
+    return $http({
+      method: 'PUT',
+      url: '/gitUser/' + loggedInUser,
+      data: {
+        username: toFollowUsername
+      }
+    })
+    .then(function (res) {
+      //console.log("FOLLOW res",res);
+      //console.log("FOLLOW res.data",res.data);
+      return res.data;
+    })
+  };
+
+
   //returns an array of additions/deletions and commits
   //made by a user for a given repo
   function getRepoWeeklyData (repo, username) {
@@ -152,13 +173,14 @@ function GitApi ($q, $http, Auth) {
     //currently only fetches repos owned by user
     //TODO: Fetch all repos user has contributed to
     //console.log("Auth.getToken()",Auth.getToken());
-    if(Auth.getToken()){
+    console.log("USERNAME",username);
+    if(loggedInUser===username){
       //console.log("HAVE ONE");
       userRepos = gitApi + 'user/' + 'repos';
     } else {
       userRepos = gitApi + 'users/' + username + '/repos';
     }
-
+    console.log("USERREPOS",userRepos);
     // console.log(get(userRepos));
     // console.log(get(userRepos).$$state);
     return get(userRepos).then(function (res){
