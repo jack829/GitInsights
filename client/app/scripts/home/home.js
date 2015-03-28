@@ -14,6 +14,7 @@
   function HomeController($scope, GitApi, Auth, Chart){
     $scope.github = {};
     $scope.currentUser = {};
+    $scope.lastUser = {};
     $scope.loaded = false;
     $scope.loaded3 = true;
     $scope.numUsers = 0;
@@ -22,8 +23,23 @@
       Auth.login()
         .then(function (github) {
           $scope.github = github;
-          console.log($scope.github);
-      });
+          return github;
+      })
+      .then(function(github){
+        //console.log("scope loging github",github);
+        GitApi.storeAndRetrieveUserDataOnLogin(github.username)
+        .then(function(res){
+          $scope.github.following = res.data.following;
+        });
+        
+      })
+      ;
+    }
+
+    $scope.follow = function(username){
+      GitApi.follow($scope.github.username,username);
+      $scope.github.following.push(username);
+      console.log("FOLLOWING",$scope.github.following);
     }
 
     $scope.logout = function(){
@@ -36,12 +52,14 @@
       // the process also tags some metadata to help with chaining
       GitApi.getAllWeeklyData(username)
         .then(function (response){
-          var data = response;
-          console.log("Response data in home.js",response);
+          //console.log("$scope.github ",$scope.github);
+          console.log("RESPONSE",response.data.gitUserData);
+          var data = response.data.gitUserData;
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');
           $scope.loaded = true;
+          $scope.lastUser.username = $scope.currentUser.username;
           $scope.currentUser = {};
           return data;
         })
@@ -54,8 +72,8 @@
           // this time the data is processed to create a pie chart that estimates 
           // the % of the each language the user codes in by taking the repo language stats * (user activity / total repo activity)
           var languages = GitApi.getUserLanguages(data);
-          console.log('weekly repo data');
-          console.log(languages[1]);
+          //console.log('weekly repo data');
+          //console.log(languages[1]);
           $scope.numUsers++;
           $scope.loaded3 = !($scope.loaded3);
 
