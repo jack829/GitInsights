@@ -15,17 +15,9 @@ function Chart () {
     pieChart: pieChart
   };
 
-<<<<<<< HEAD
+
  function lineGraph (data, username, type) {
-||||||| merged common ancestors
-  function lineGraph (data, username) {
-    console.log(data);
 
-=======
-  function lineGraph (data, username) {
-    //console.log(data);
-
->>>>>>> Add username and follow button to view; add follow function(w/o functionality) to homecontroller
 
     var secondsPerYear = 525600 * 60;
     var dateNow = new Date() / 1000; //convert to unix

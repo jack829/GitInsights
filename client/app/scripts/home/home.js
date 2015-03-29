@@ -36,10 +36,15 @@
           $scope.github.following = res.data.following;
 
           console.log("scope.github ", $scope.github.username)
+          return github;
+        })
+        .then(function(github){
           Auth.saveEmployer(github.username)
             .then(function(data) {
               console.log("employer data received: ", data)
               $scope.employer = data;
+              console.log("scope.employer ", $scope.employer);
+
             })
             // .then(function($scope.github.username){
             //   Follow.getEmployerUsers($scope.github.username)
@@ -67,9 +72,11 @@
       // GitApi.getUserContact(username);
       GitApi.getAllWeeklyData(username)
         .then(function (response){
+
           //console.log("$scope.github ",$scope.github);
           console.log("RESPONSE",response.data.gitUserData);
           var data = response.data.gitUserData;
+
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');
@@ -112,11 +119,12 @@
     // };
 
     $scope.follow = function(employerUsername, username) {
-      console.log("scope.github.username ", $scope.github)
+      console.log("scope.github ", $scope.github)
       Follow.addToFollowing(employerUsername, username)
         .then(function(data) {
           console.log("now following user ", username);
         })
+      
       // console.log("about to follow!");
       // GitApi.getUserContact(username)
       //   .then(function(data){
@@ -136,9 +144,25 @@
 
     }
 
+    $scope.checkFollow = function(username) {
+      for (var i = 0; i < $scope.employer.following.length; i++){
+        if ($scope.employer.following[i].username === username) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
     $scope.saveNote = function(note) {
       console.log("saving note:", note)
+      Follow.addNote(note)
+        .then(function(data) {
+          console.log("resp from note");
+        })
     }
   }
 })();
+
+
 

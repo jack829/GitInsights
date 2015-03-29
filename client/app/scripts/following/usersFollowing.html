@@ -6,15 +6,16 @@
 
     
 <table>
-  <th>
+<!--   <th>
     <td> Name </td>
     <td> GitHub Username </td>
     <td> Email </td>
-  </th>
-  <tr ng-repeat="user in usersFollowing">
-    <td> </td>
+  </th> -->
+  <tr ng-repeat="user in github.following">
+    <td> {{user.profileThumbUrl}}</td>
     <td> {{user.name}} </td>
     <td> {{user.username}} </td>
-    <td> {{user.email}} </td>
+    <td> {{user.lastViewed}} </td>
+
   </tr>
 </table>

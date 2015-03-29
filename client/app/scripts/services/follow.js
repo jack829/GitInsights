@@ -13,12 +13,11 @@
     };
 
     function addToFollowing (employerUserName, username) {
-      console.log("iin addToFollowing");
-      console.log("employerUserName ", employerUserName);
+      console.log("addToFollowing employerUserName ", employerUserName);
       console.log("username ", username);
       return $http({
         method: 'PUT',
-        url: 'gitUser/' + jack829 +'/following',
+        url: 'gitUser/' + employerUserName +'/following',
         data: {
           username: username
         }
@@ -28,16 +27,23 @@
       })
     };
 
-    function getEmployerUsers (username) {
+    function getEmployerUsers (employerUserName) {
 
-      //console.log("username for ")
+      console.log("username for")
+      return $http({
+        method: 'GET',
+        url: 'gitUser/' + username + '/following'
+      })
+      .then(function(res) {
+        return res.data;
+      })
+    }
+    function addNote (note) {
       // return $http({
-      //   method: 'GET',
-      //   url: 'employer/' + username + '/following'
+      //   method: 'PUT',
+      //   url: 
       // })
-      // .then(function(res) {
-      //   return res.data;
-      // })
+
     }
   }
 })();

@@ -251,8 +251,8 @@ function GitApi ($q, $http, Auth) {
     repos.forEach(function (repo) {
       var result = estimateUserContribution(repo);
       if (result) {
-        //console.log('result1');
-        //console.log(result[1]);
+        // console.log('result1');
+        // console.log(result[1]);
         for (var language in result[0]) {
           if (squashed[language]) {
             squashed[language] += result[0][language];
