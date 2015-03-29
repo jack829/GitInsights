@@ -6,7 +6,7 @@
   //defines the colors
   .config( function($mdThemingProvider){
     $mdThemingProvider.theme('docs-dark', 'default')
-    .primaryPalette('light-blue')
+    .primaryPalette('light-blue');
   });
 
   HomeController.$inject = ['$scope', 'GitApi', 'Auth', 'Chart', 'Follow'];
@@ -15,7 +15,6 @@
     $scope.github = {};
     $scope.employer= {};
     $scope.currentUser = {};
-
     $scope.lastUser = {};  //add last user for display purposes
     $scope.usersFollowing = [];
     $scope.loaded = false;
@@ -34,32 +33,17 @@
         GitApi.storeAndRetrieveUserDataOnLogin(github.username)
         .then(function(res){
           $scope.github.following = res.data.following;
-
-          console.log("scope.github ", $scope.github.username)
+          console.log("scope.github.username ", $scope.github.username);
           return github;
-        })
-        .then(function(github){
-          Auth.saveEmployer(github.username)
-            .then(function(data) {
-              console.log("employer data received: ", data)
-              $scope.employer = data;
-              console.log("scope.employer ", $scope.employer);
-
-            })
-            // .then(function($scope.github.username){
-            //   Follow.getEmployerUsers($scope.github.username)
-            // });
         });
       });
     }
 
     $scope.follow = function(username){
       GitApi.follow($scope.github.username,username);
-      $scope.github.following.push(username);
+      //$scope.github.following.push(username);
       console.log("FOLLOWING",$scope.github.following);
-      });
-
-    }
+      };
 
     $scope.logout = function(){
       Auth.logout();
@@ -110,57 +94,7 @@
           Chart.lineGraph(languages[1], username, 'languages');
           Chart.pieChart(languages[0], config);
         });
-    };
-
-    // add functionality for following users
-    // $scope.following = function() {
-    //   //console.log("in following!");
-    //   $scope.following = !($scope.following);
-    // };
-
-    $scope.follow = function(employerUsername, username) {
-      console.log("scope.github ", $scope.github)
-      Follow.addToFollowing(employerUsername, username)
-        .then(function(data) {
-          console.log("now following user ", username);
-        })
-      
-      // console.log("about to follow!");
-      // GitApi.getUserContact(username)
-      //   .then(function(data){
-      //     // console.log("contact info ", data);
-      //     // console.log("name ", data.name);
-      //     // console.log("email ", data.email);
-      //     var user = {
-      //       username: username,
-      //       name: data.name,
-      //       email: data.email
-      //     }
-      //     // Follow.saveGitUser(user)
-      //     //   .then(function(data){
-      //     //     console.log("followed user")
-      //     //   });
-          // $scope.usersFollowing.push(user);
-
-    }
-
-    $scope.checkFollow = function(username) {
-      for (var i = 0; i < $scope.employer.following.length; i++){
-        if ($scope.employer.following[i].username === username) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-
-    $scope.saveNote = function(note) {
-      console.log("saving note:", note)
-      Follow.addNote(note)
-        .then(function(data) {
-          console.log("resp from note");
-        })
-    }
+    };    
   }
 })();
 
