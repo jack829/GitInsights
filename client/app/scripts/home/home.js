@@ -42,7 +42,6 @@
     $scope.follow = function(username){
       GitApi.follow($scope.github.username,username);
       //$scope.github.following.push(username);
-      console.log("FOLLOWING",$scope.github.following);
       };
 
     $scope.logout = function(){
@@ -56,11 +55,7 @@
       // GitApi.getUserContact(username);
       GitApi.getAllWeeklyData(username)
         .then(function (response){
-
-          //console.log("$scope.github ",$scope.github);
-          console.log("RESPONSE",response.data.gitUserData);
           var data = response.data.gitUserData;
-
           // here we can immediately process the data to draw a line graph of the user's activity
           var weeklyData = GitApi.reduceAllWeeklyData(data)
           Chart.lineGraph(weeklyData, username, 'additions');
@@ -78,11 +73,8 @@
           // this time the data is processed to create a pie chart that estimates 
           // the % of the each language the user codes in by taking the repo language stats * (user activity / total repo activity)
           var languages = GitApi.getUserLanguages(data);
-          //console.log('weekly repo data');
-          //console.log(languages[1]);
           $scope.numUsers++;
           $scope.loaded3 = !($scope.loaded3);
-
           var config = {};
           //Make the pie chart the third chart
           config.chart = "#chart3"

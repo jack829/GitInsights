@@ -1,0 +1,44 @@
+<div>
+  <h1> USER PAGE </h1>
+  <p class="lead">
+    <md-content md-theme="docs-dark" class="md-padding" layout="row" layout-sm="column" style="font-size:1.2em">
+      <md-input-container required flex>
+        <label>Github Username</label>
+        <input required ng-enter="getAllWeeklyData(currentUser.username)" ng-keypress="($event.which === 13)?getAllWeeklyData(currentUser.username):0" name="username" ng-model="currentUser.username" placeholder="">
+      </md-input-container>
+       <md-button ng-click="getAllWeeklyData(currentUser.username)">Search</md-button>
+    </md-content>
+
+<!-- /////////////////// adding following button-->
+    <md-content layout="row" layout-sm="column">
+      <h2>Viewing: {{lastUser.username}}</h2>
+      <md-button ng-click="follow(lastUser.username)">
+      <h1>follow {{lastUser.username}}</h1>
+      </md-button>
+    </md-content>
+<!-- ////////////// Add note -->
+    <md-content>
+      <md-input-container>
+        <label>Add Note on User</label>
+        <input type="text" ng-model="note"></input>
+      </md-input-container>
+      <md-button ng-click="saveNote(note)"> Add Note </md-button>
+    </md-content>
+  </p>
+</div>
+
+<div ng-if="loaded" id="chart" class="clearfix">
+ <svg style="height:300px;">
+ </svg>
+</div>
+
+<div ng-if="loaded" id="chart2" class="clearfix">
+  <svg style="height:300px;">
+  </svg>
+</div>
+
+
+<div ng-if="loaded" id="chart3" class="clearfix">
+  <svg style="height:300px;">
+  </svg>
+</div>

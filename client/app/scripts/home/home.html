@@ -32,85 +32,16 @@
                   <label>Github Username</label>
                   <input required ng-keypress="($event.which === 13)?getAllWeeklyData(currentUser.username):0" name="username" ng-model="currentUser.username" placeholder="">
                 </md-input-container>
-                <md-button ng-click="getAllWeeklyData(currentUser.username)">Search</md-button>
+                <md-button ng-click="getAllWeeklyData(currentUser.username)" ng-href="#/user/{{currentUser.username}}">Search</md-button>
               </md-content>
             </p>
           </div>
-        <!-- </div> -->
-
-        <div ng-if="loaded">
-          <p class="lead">
-            <md-content md-theme="docs-dark" class="md-padding" layout="row" layout-sm="column" style="font-size:1.2em">
-              <md-input-container required flex>
-                <label>Github Username</label>
-                <input required ng-enter="getAllWeeklyData(currentUser.username)" ng-keypress="($event.which === 13)?getAllWeeklyData(currentUser.username):0" name="username" ng-model="currentUser.username" placeholder="">
-              </md-input-container>
-              <!--<md-button ng-click="getAllWeeklyData(currentUser.username)">Compare Users</md-button>!-->
-               <md-button ng-click="getAllWeeklyData(currentUser.username)">Search</md-button>
-            </md-content>
-
-      <!-- /////////////////// adding following button-->
-            <md-content layout="row" layout-sm="column">
-              <h2>Viewing: {{lastUser.username}}</h2>
-              <md-button ng-click="follow(lastUser.username)">
-              <h1>follow {{lastUser.username}}</h1>
-              </md-button>
-            </md-content>
-          
-      <!-- /////////////////// end addition -->
-
-   
-    <!-- ///////// Add place for notes -->
-              <md-input-container>
-                <label>Add Note on User</label>
-                <input type="text" ng-model="note"></input>
-                <!-- <input type="submit" value="Add Note"/> -->
-              </md-input-container>
-              <md-button ng-click="saveNote(note)"> Add Note </md-button>
-
-            </md-content>
-      <!-- /////////////////// end addition -->
-
-          </p>
       </div>
 
 
-      <div ng-if="loaded" id="chart" class="clearfix">
-        <svg style="height:300px;">
-        </svg>
-      </div>
-
-     <div ng-if="loaded" id="chart2" class="clearfix">
-       <svg style="height:300px;">
-       </svg>
-     </div>
-
-
-
-     <div ng-if="loaded" id="chart3" class="clearfix">
-       <svg style="height:300px;">
-       </svg>
-     </div>
+      
     
 
-    <!-- /////////// Add following page -->
-  <!--   move to usersFollowing.html 
-     <div ng-if="!following">
-      <h2> Users you Follow</h2>
-      <table>
-        <th>
-          <td> Name </td>
-          <td> GitHub Username </td>
-          <td> Email </td>
-        </th>
-        <tr ng-repeat="user in usersFollowing">
-          <td> </td>
-          <td> {{user.name}} </td>
-          <td> {{user.username}} </td>
-          <td> {{user.email}} </td>
-        </tr>
-      </ul>
-     </div> -->
 
       <div class="mastfoot">
         <div class="inner">

@@ -42,7 +42,7 @@ function Auth ($q, $http) {
           console.log("Login Failed!", error);
           reject(error);
         } else {
-          console.log("Authenticated successfully with payload:", authData);
+          //console.log("Authenticated successfully with payload:", authData);
           github = authData.github;
           resolve(github);
         }
